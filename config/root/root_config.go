@@ -30,6 +30,8 @@ type Config struct {
 }
 
 func (c *Config) GetApplicationConfig() (*application.Config, error) {
+	//reg:=new(registry.Config)
+	//c.v.GetDuration(reg.Prefix()+"timeout")
 	// set default
 	conf := c.Application
 	if err := conf.DefaultSetter(); err != nil {
@@ -80,6 +82,7 @@ func (c *Config) GetProviderConfig() (*provider.Config, error) {
 	pro := c.Provider
 	services := make(map[string]*service.Config, len(config.GetAllProviderService()))
 	for key := range config.GetAllProviderService() {
+		//
 		if svc, ok := pro.Services[key]; ok {
 			_ = svc.DefaultSetter()
 			svc.Id = key

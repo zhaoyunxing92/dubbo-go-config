@@ -24,11 +24,4 @@ dubbo:
     module: local
     version: 1.0.0
     owner: zhaoyunxing
-  services:
-    hello-service:
-      interface: org.dubbo.service.HelloService
-      registry: nacos,zk
-    order-service:
-      interface: org.dubbo.service.OrderService
-      registry: nacos
 ```

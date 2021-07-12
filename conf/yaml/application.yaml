@@ -1,4 +1,6 @@
 dubbo:
+  config-cent:
+
   application:
     name: dubbo-go
     module: local
