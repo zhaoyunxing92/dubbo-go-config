@@ -1,2 +1,3 @@
 # dubbo-go-config
-主要写一些dubbo go配置
+
+dubbo-go 配置优化样例代码
