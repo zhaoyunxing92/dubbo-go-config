@@ -6,6 +6,8 @@ import (
 )
 
 type Config interface {
+	// Prefix key
+	Prefix() string
 	// DefaultSetter set default value
 	DefaultSetter() error
 	// Validate value

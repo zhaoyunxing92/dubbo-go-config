@@ -3,6 +3,7 @@ module zhaoyunxing92/dubbo-go-config
 go 1.16
 
 require (
+	github.com/apache/dubbo-go v1.5.6
 	github.com/creasty/defaults v1.5.1
 	github.com/go-playground/locales v0.13.0
 	github.com/go-playground/universal-translator v0.17.0

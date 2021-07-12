@@ -12,13 +12,11 @@ dubbo:
       address: 127.0.0.1:8848
     zk:
       protocol: zk
-      timeout: 5s
       group: dev
       address: 127.0.0.1:2181
-  services:
-    hello-service:
-      interface: org.dubbo.service.HelloService
-      registry: nacos,zk
-    order-service:
-      interface: org.dubbo.service.OrderService
-      registry: nacos
+  provider:
+    check: false
+    services:
+      hello-service:
+        interface: org.dubbo.service.HelloService
+        registry: nacos

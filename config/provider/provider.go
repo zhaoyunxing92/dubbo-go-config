@@ -1,4 +1,4 @@
-package application
+package provider
 
 import (
 	"errors"
@@ -6,18 +6,20 @@ import (
 	translator "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	"strings"
+	"zhaoyunxing92/dubbo-go-config/config/service"
 )
 
-// Config application
 type Config struct {
-	Name    string `default:"zyx" yaml:"name" json:"name" validate:"required"`
-	Module  string `yaml:"module" json:"module"`
-	Version string `default:"1.0.0" yaml:"version" json:"version"`
-	Owner   string `default:"zyx" yaml:"owner" json:"owner"`
+	// 是否检查
+	Check string `yaml:"check" json:"check"`
+	// 是否注册
+	Register bool `default:"true" yaml:"register" json:"register"`
+	// Services config
+	Services map[string]*service.Config `yaml:"services" json:"services"`
 }
 
-func (*Config) Prefix() string {
-	return "dubbo.application"
+func (c *Config) Prefix() string {
+	return "dubbo.provider"
 }
 
 func (c *Config) DefaultSetter() error {

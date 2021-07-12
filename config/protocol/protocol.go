@@ -1,4 +1,4 @@
-package application
+package protocol
 
 import (
 	"errors"
@@ -8,16 +8,14 @@ import (
 	"strings"
 )
 
-// Config application
 type Config struct {
-	Name    string `default:"zyx" yaml:"name" json:"name" validate:"required"`
-	Module  string `yaml:"module" json:"module"`
-	Version string `default:"1.0.0" yaml:"version" json:"version"`
-	Owner   string `default:"zyx" yaml:"owner" json:"owner"`
+	Name string `yaml:"name" json:"name,omitempty" property:"name"`
+	Ip   string `yaml:"ip" json:"ip,omitempty" property:"ip"`
+	Port string `yaml:"port"  json:"port,omitempty" property:"port"`
 }
 
 func (*Config) Prefix() string {
-	return "dubbo.application"
+	return "dubbo.protocols"
 }
 
 func (c *Config) DefaultSetter() error {
