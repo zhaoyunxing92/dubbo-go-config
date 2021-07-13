@@ -1,7 +1,5 @@
 # dubbo-go-config
 
-dubbo-go 配置优化样例代码
-
 考虑到目前用户配置dubbo-go文件很繁琐，且没有层级，最终的的目标是简化到`spring boot`的那种程度
 
 ## 配置使用
@@ -29,6 +27,8 @@ registries, _ := config.GetRegistriesConfig()
 * `WithName`: 配置文件名称
 
 ### 没有配置`registries`情况下给默认`zk`
+
+> 最终目标就这点配置
 
 ```yaml
 dubbo:
