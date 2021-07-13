@@ -14,6 +14,6 @@ type OrderService struct {
 	GetOrders func(ctx context.Context, req []interface{}) error
 }
 
-func (os *OrderService) Reference() string {
+func (OrderService) Reference() string {
 	return "order-service"
 }

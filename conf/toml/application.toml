@@ -16,10 +16,10 @@ timeout="5s"
 group="dev"
 address="127.0.0.1:2818"
 
-[dubbo.services.hello-service]
+[dubbo.provider.services.hello-service]
 interface="org.dubbo.service.HelloService"
 registry=["nacos","zk"]
 
-[dubbo.services.order-service]
+[dubbo.provider.services.order-service]
 interface="org.dubbo.service.HelloService"
 registry=["nacos"]

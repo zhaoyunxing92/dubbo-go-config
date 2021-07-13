@@ -17,14 +17,14 @@ import (
 
 // config config
 type config struct {
-	// prefix default dubbo
-	prefix string
 	// config file name default application
 	name string
 	// config file type default yaml
 	genre string
 	// config file path default ./conf
 	path string
+	// cache file default ture
+	cache bool
 }
 type optionFunc func(*config)
 
@@ -36,16 +36,13 @@ type Option interface {
 	apply(vc *config)
 }
 
+var bc *root.Config
+
 func Load(opts ...Option) *root.Config {
 	// pares CommandLine
 	parseCommandLine()
-
-	conf := &config{
-		viper.GetString("prefix"),
-		viper.GetString("name"),
-		viper.GetString("genre"),
-		viper.GetString("path"),
-	}
+	// get config
+	conf := getConfig()
 
 	for _, opt := range opts {
 		opt.apply(conf)
@@ -60,26 +57,42 @@ func Load(opts ...Option) *root.Config {
 		panic(err)
 	}
 
-	var bc root.Config
-	if err := v.UnmarshalKey(conf.prefix, &bc); err != nil {
+	bc = new(root.Config)
+	if err := v.UnmarshalKey(bc.Prefix(), &bc); err != nil {
 		fmt.Println(err)
 	}
-	bc.SetViper(v)
 
 	validate := validator.New()
 	uni := translator.New(en.New(), zh.New())
 	trans, _ := uni.GetTranslator("zh")
 	_ = zh_trans.RegisterDefaultTranslations(validate, trans)
 
+	bc.SetViper(v)
 	bc.SetValidate(validate)
 	bc.SetTranslator(trans)
 
-	return &bc
+	// cache file
+	if conf.cache {
+		_ = bc.WriteConfig()
+	}
+	return bc
+}
+
+func getConfig() *config {
+	return &config{
+		viper.GetString("name"),
+		viper.GetString("genre"),
+		viper.GetString("path"),
+		viper.GetBool("cache"),
+	}
+}
+func GetBaseConfig() *root.Config {
+	return bc
 }
 
 //parseCommandLine parse command line
 func parseCommandLine() {
-	flag.String("prefix", "dubbo", "config file prefix key")
+	flag.Bool("cache", true, "config file cache")
 	flag.String("name", "application.yaml", "config file name")
 	flag.String("genre", "yaml", "config file type")
 	flag.String("path", "./conf", "config file path default")
@@ -104,14 +117,14 @@ func WithPath(path string) Option {
 	})
 }
 
-func WithPrefix(prefix string) Option {
-	return optionFunc(func(conf *config) {
-		conf.prefix = prefix
-	})
-}
-
 func WithName(name string) Option {
 	return optionFunc(func(conf *config) {
 		conf.name = name
+	})
+}
+
+func WithCache(cache bool) Option {
+	return optionFunc(func(conf *config) {
+		conf.cache = cache
 	})
 }

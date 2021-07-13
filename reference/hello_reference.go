@@ -14,6 +14,6 @@ type HelloService struct {
 	Say func(ctx context.Context, req []interface{}) error
 }
 
-func (hs *HelloService) Reference() string {
+func (HelloService) Reference() string {
 	return "hello-service"
 }

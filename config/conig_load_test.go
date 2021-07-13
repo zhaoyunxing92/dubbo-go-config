@@ -7,18 +7,19 @@ import (
 )
 
 func TestYamlLoad(t *testing.T) {
-	config := Load(
-		WithGenre("yaml"),
-		WithPrefix("dubbo"),
-		WithPath("../conf/yaml"),
-		WithName("application.yaml"),
+	conf := Load(
+		WithGenre("toml"),
+		WithCache(false),
+		WithPath("../conf/toml"),
+		WithName("application.toml"),
 	)
 
-	application, _ := config.GetApplicationConfig()
+	application, _ := conf.GetApplicationConfig()
 
-	registries, _ := config.GetRegistriesConfig()
+	registries, _ := conf.GetRegistriesConfig()
 
-	providerConfig, _ := config.GetProviderConfig()
+	providerConfig, _ := conf.GetProviderConfig()
+
 
 	assert.Equal(t, application.Name, "dubbo-go")
 

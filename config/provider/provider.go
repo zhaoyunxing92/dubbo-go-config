@@ -11,7 +11,7 @@ import (
 
 type Config struct {
 	// 是否检查
-	Check string `yaml:"check" json:"check"`
+	Check bool `default:"true" yaml:"check" json:"check"`
 	// 是否注册
 	Register bool `default:"true" yaml:"register" json:"register"`
 	// Services config

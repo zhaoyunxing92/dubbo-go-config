@@ -10,11 +10,10 @@ import (
 import "github.com/creasty/defaults"
 
 type Config struct {
-	Protocol string `default:"zookpeer" yaml:"protocol" json:"protocol"`
+	Protocol string `default:"zookeeper" yaml:"protocol" json:"protocol"`
 	Timeout  string `default:"10s" yaml:"timeout" json:"timeout"`
 	Group    string `default:"dubbo" yaml:"group" json:"group"`
 	Address  string `default:"127.0.0.1:2181" yaml:"address" json:"address"`
-	Register bool
 }
 
 func (*Config) Prefix() string {

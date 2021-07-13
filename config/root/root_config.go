@@ -1,16 +1,15 @@
 package root
 
 import (
-	"github.com/apache/dubbo-go/config"
 	translator "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	"github.com/spf13/viper"
 	"zhaoyunxing92/dubbo-go-config/config/provider"
+	"zhaoyunxing92/dubbo-go-config/config/service"
 )
 import (
 	"zhaoyunxing92/dubbo-go-config/config/application"
 	"zhaoyunxing92/dubbo-go-config/config/registry"
-	"zhaoyunxing92/dubbo-go-config/config/service"
 )
 
 // Config root config
@@ -29,10 +28,10 @@ type Config struct {
 	trans translator.Translator
 }
 
+func (Config) Prefix() string {
+	return "dubbo"
+}
 func (c *Config) GetApplicationConfig() (*application.Config, error) {
-	//reg:=new(registry.Config)
-	//c.v.GetDuration(reg.Prefix()+"timeout")
-	// set default
 	conf := c.Application
 	if err := conf.DefaultSetter(); err != nil {
 		return &application.Config{}, err
@@ -45,7 +44,6 @@ func (c *Config) GetApplicationConfig() (*application.Config, error) {
 }
 
 func (c *Config) GetRegistriesConfig() (map[string]*registry.Config, error) {
-
 	registries := c.Registries
 
 	if len(registries) <= 0 {
@@ -80,33 +78,21 @@ func (c *Config) GetRegistryIds() []string {
 //GetProviderConfig services config
 func (c *Config) GetProviderConfig() (*provider.Config, error) {
 	pro := c.Provider
-	services := make(map[string]*service.Config, len(config.GetAllProviderService()))
-	for key := range config.GetAllProviderService() {
-		//
-		if svc, ok := pro.Services[key]; ok {
-			_ = svc.DefaultSetter()
-			svc.Id = key
-			if len(svc.Registry) <= 0 {
-				svc.Registry = c.GetRegistryIds()
-			}
-			services[key] = svc
-		} else {
-			svc = new(service.Config)
-			_ = svc.DefaultSetter()
-			svc.Registry = c.GetRegistryIds()
-			services[key] = svc
-		}
-	}
-	pro.Services = services
-
 	if err := pro.DefaultSetter(); err != nil {
 		return &provider.Config{}, err
 	}
+	// services config
+	pro.Services = service.GetServiceConfig(c.GetRegistryIds(), pro.Services)
 
 	if err := pro.Validate(c.validate, c.trans); err != nil {
 		return &provider.Config{}, err
 	}
 	return pro, nil
+}
+
+func (c *Config) WriteConfig() error {
+	c.v.Set(c.Prefix(), c)
+	return c.v.WriteConfig()
 }
 
 func (c *Config) SetViper(v *viper.Viper) {

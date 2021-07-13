@@ -1,24 +1,22 @@
 dubbo:
-  config-cent:
-
   application:
-    name: dubbo-go
     module: local
-    version: 1.0.0
+    name: dubbo-go
     owner: zhaoyunxing
-  registries:
-    nacos:
-      protocol: nacos
-      timeout: 5s
-      group: dev
-      address: 127.0.0.1:8848
-    zk:
-      protocol: zk
-      group: dev
-      address: 127.0.0.1:2181
+    version: 1.0.0
   provider:
     check: false
     services:
       hello-service:
         interface: org.dubbo.service.HelloService
         registry: nacos
+  registries:
+    nacos:
+      address: nacos://127.0.0.1:8848
+      group: dev
+      protocol: nacos
+      timeout: 5s
+    zk:
+      address: 127.0.0.1:2181
+      group: dev
+      protocol: zk
