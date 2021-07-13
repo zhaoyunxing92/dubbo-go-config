@@ -2,11 +2,11 @@ package reference
 
 import (
 	"context"
-	"github.com/apache/dubbo-go/config"
+	"zhaoyunxing92/dubbo-go-config/config/service"
 )
 
 func init() {
-	config.SetProviderService(new(HelloService))
+	service.SetProviderService(new(HelloService))
 }
 
 type HelloService struct {

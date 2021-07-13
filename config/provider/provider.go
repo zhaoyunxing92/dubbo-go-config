@@ -15,7 +15,7 @@ type Config struct {
 	// 是否注册
 	Register bool `default:"true" yaml:"register" json:"register"`
 	// Services config
-	Services map[string]*service.Config `yaml:"services" json:"services"`
+	Services map[string]*service.Config `yaml:"services" json:"services" validate:"required"`
 }
 
 func (c *Config) Prefix() string {

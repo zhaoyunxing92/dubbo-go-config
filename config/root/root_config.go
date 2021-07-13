@@ -77,15 +77,22 @@ func (c *Config) GetRegistryIds() []string {
 
 //GetProviderConfig services config
 func (c *Config) GetProviderConfig() (*provider.Config, error) {
+	var (
+		services map[string]*service.Config
+		err      error
+	)
 	pro := c.Provider
-	if err := pro.DefaultSetter(); err != nil {
+	if err = pro.DefaultSetter(); err != nil {
 		return &provider.Config{}, err
 	}
-	// services config
-	pro.Services = service.GetServiceConfig(c.GetRegistryIds(), pro.Services)
 
-	if err := pro.Validate(c.validate, c.trans); err != nil {
-		return &provider.Config{}, err
+	if services, err = service.GetServiceConfig(c.GetRegistryIds(), pro.Services, c.validate); err != nil {
+		return nil, err
+	}
+	// services config
+	pro.Services = services
+	if err = pro.Validate(c.validate, c.trans); err != nil {
+		return nil, err
 	}
 	return pro, nil
 }

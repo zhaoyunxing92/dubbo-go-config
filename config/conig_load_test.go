@@ -14,12 +14,15 @@ func TestYamlLoad(t *testing.T) {
 		WithName("application.toml"),
 	)
 
-	application, _ := conf.GetApplicationConfig()
+	application, err := conf.GetApplicationConfig()
+	assert.Nil(t, err)
 
-	registries, _ := conf.GetRegistriesConfig()
+	registries, err := conf.GetRegistriesConfig()
+	assert.Nil(t, err)
 
-	providerConfig, _ := conf.GetProviderConfig()
+	providerConfig, err := conf.GetProviderConfig()
 
+	assert.Nil(t, err)
 
 	assert.Equal(t, application.Name, "dubbo-go")
 

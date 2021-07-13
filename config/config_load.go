@@ -86,6 +86,7 @@ func getConfig() *config {
 		viper.GetBool("cache"),
 	}
 }
+
 func GetBaseConfig() *root.Config {
 	return bc
 }
