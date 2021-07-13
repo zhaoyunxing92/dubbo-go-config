@@ -72,9 +72,9 @@ func Load(opts ...Option) *root.Config {
 	bc.SetTranslator(trans)
 
 	// cache file
-	if conf.cache {
-		_ = bc.WriteConfig()
-	}
+	//if conf.cache {
+	//	_ = bc.WriteConfig()
+	//}
 	return bc
 }
 

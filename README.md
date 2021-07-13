@@ -17,7 +17,33 @@ application, _ := config.GetApplicationConfig()
 registries, _ := config.GetRegistriesConfig()
 ```
 
-### 已经支持命令行参数
+### 命令行参数
+
+默认解析yaml文件
+
+> json文件解析
+
+```shell
+➜  samples git:(main) ✗ ./main --path=../conf/json --genre=json --name=application.json
+start load config file
+application name: dubbo-go
+```
+
+> toml 文件解析
+
+```shell
+➜  samples git:(main) ✗ ./main --path=../conf/toml --genre=toml --name=application.toml
+start load config file
+application name: dubbo-go
+```
+
+> yaml 文件解析
+
+```shell
+➜  samples git:(main) ✗ ./main --path=../conf                                          
+start load config file
+application name: dubbo-go
+```
 
 ### 参数说明
 

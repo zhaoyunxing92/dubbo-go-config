@@ -34,7 +34,7 @@ func (Config) Prefix() string {
 func (c *Config) GetApplicationConfig() (*application.Config, error) {
 	conf := c.Application
 	if err := conf.DefaultSetter(); err != nil {
-		return &application.Config{}, err
+		return nil, err
 	}
 	//validate value
 	if err := conf.Validate(c.validate, c.trans); err != nil {
