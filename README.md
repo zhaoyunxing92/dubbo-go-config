@@ -5,16 +5,16 @@
 ## 配置使用
 
 ```go
-config := config.Load(
+conf := config.Load(
     WithGenre("yaml"),
     WithCache(false),
     WithPath("../conf/yaml"),
     WithName("application.yaml"),
 )
 
-application, _ := config.GetApplicationConfig()
+application, _ := conf.GetApplicationConfig()
 
-registries, _ := config.GetRegistriesConfig()
+registries, _ := conf.GetRegistriesConfig()
 ```
 
 ### 命令行参数
